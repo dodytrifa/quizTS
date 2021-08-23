@@ -1,1 +1,2 @@
-//* this file purposes it to randomize questions
+export const randomArray =  (array: any[]) =>
+ [...array].sort(() => Math.random() -0.5)
