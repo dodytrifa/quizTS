@@ -35,8 +35,23 @@ const App: React.FC = () => {
     setLoading(false)
   }
 
-  const answer = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const checkAnswer = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if(!gameOver){
+      const answer = e.currentTarget.value;
+      const correct = questions[number].correct_answer === answer
+      
+      if(correct) {
+        return setScore(prev => prev + 1)
+      }
 
+      const answerObject = {
+        question: questions[number].question,
+        answer,
+        correct,
+        correctAnswer: questions[number].correct_answer
+      }
+      setUserAnswers((prev) => [...prev, answerObject] )
+    }
   }
 
   const initQuizz = () => {
@@ -68,7 +83,7 @@ const App: React.FC = () => {
         question={questions[number].question}
         answers={questions[number].answers}
         userAnswer={userAnswers ? userAnswers[number] : undefined}
-        callback={answer}
+        callback={checkAnswer}
         />
       )}
       {!gameOver && !loading && userAnswers.length === number + 1 &&
