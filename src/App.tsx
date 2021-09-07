@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import QuestionCard from './components/QuestionCard'
 import { QuestionState, fetchQuest, Difficulty } from './API';
+import { GlobalStyle, Wrap } from './App.styles'
 
 const TOTAL_QUESTIONS = 10
 
-type AnswerObject = {
+export type AnswerObject = {
   question: string;
   answer: string;
   correct: boolean;
@@ -19,7 +20,7 @@ const App: React.FC = () => {
   const [score, setScore] = useState(0)
   const [gameOver, setGameOver] = useState(true)
  
-  // console.log(fetchQuest(TOTAL_QUESTIONS,Difficulty.       EASY));
+  // console.log(fetchQuest(TOTAL_QUESTIONS,Difficulty.EASY));
   
 
   const initQuiz = async () => {
@@ -59,11 +60,19 @@ const App: React.FC = () => {
     
   }
   const nextQuestion = () => {
+    const nextQuestion = number + 1
 
+    if(nextQuestion === TOTAL_QUESTIONS){
+      setGameOver(true)
+    }else {
+      setNumber(nextQuestion)
+    }
   }
 
   return (
-    <div className="App">
+    <>
+    <GlobalStyle/>
+    <Wrap>
       <h1>A QUIZ BUILD WITH REACT TYPESCRIPT</h1>
       
       {/* <button className='start' onClick={initQuizz}>Start</button> */}
@@ -74,7 +83,7 @@ const App: React.FC = () => {
           </button>
       ): null 
       }
-      {!gameOver ? <p className='score'>Score:</p> : null}
+      {!gameOver ? <p className='score'>Score: {score}</p> : null}
       {loading && <p>Loading Questions...</p>}
       {!loading && !gameOver && (
         <QuestionCard
@@ -90,7 +99,9 @@ const App: React.FC = () => {
       number !== TOTAL_QUESTIONS - 1 ? (
         <button className='next' onClick={nextQuestion}>Next Question</button>
       ): null}
-    </div>
+    </Wrap>
+    </>
+    
   );
 }
 

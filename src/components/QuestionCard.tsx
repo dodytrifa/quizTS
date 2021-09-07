@@ -1,10 +1,12 @@
 import React from 'react'
+import {AnswerObject} from '../App'
+import {Wrap} from '../App.styles'
 
 type PropsData= {
   question: string;
   answers: string[];
-  callback: any;
-  userAnswer: any;
+  callback: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  userAnswer: AnswerObject | undefined;
   questionNumber: number;
   totalQuestion: number;
 }
@@ -34,7 +36,7 @@ const QuestionCard: React.FC<PropsData> = ({
   userAnswer, 
   questionNumber,
   totalQuestion}) => (
-    <div>
+    <Wrap>
       <p className='number'> 
         Question: {questionNumber} / {totalQuestion}
       </p>
@@ -42,14 +44,14 @@ const QuestionCard: React.FC<PropsData> = ({
       <div>
         {answers.map(answer => (
           <div key={answer}>
-            <button disabled={userAnswer} value={answer} onClick={callback}>
+            <button disabled={userAnswer ? true : false} value={answer} onClick={callback}>
               <span dangerouslySetInnerHTML={{__html: answer}}/>
             </button>
           </div>
         )
         )}
       </div>
-    </div>
+    </Wrap>
   )
 
 
